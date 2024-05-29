@@ -4,6 +4,8 @@ set(CMAKE_CXX_STANDARD 20 CACHE STRING "The C++ standard to use")
 #set(CMAKE_C_STANDARD 11 CACHE STRING "The C standard to use")
 set(CMAKE_C_STANDARD 11)
 
+add_compile_definitions(F3DEX_GBI_2)
+
 ################################################################################
 # Source groups
 ################################################################################
@@ -53,7 +55,7 @@ set(Header_Files__Z64
     "ZCollision.h"
     "ZCollisionPoly.h"
     "ZCKeyFrame.h"
-    "ZCkeyFrameAnim.h"	
+    "ZCkeyFrameAnim.h"
     "ZCutscene.h"
     "ZDisplayList.h"
     "ZFile.h"
@@ -143,11 +145,7 @@ source_group("Source Files" FILES ${Source_Files})
 set(Source_Files__Libraries__libgfxd
     "../lib/libgfxd/gfxd.c"
     "../lib/libgfxd/uc.c"
-    "../lib/libgfxd/uc_f3d.c"
-    "../lib/libgfxd/uc_f3db.c"
-    "../lib/libgfxd/uc_f3dex.c"
     "../lib/libgfxd/uc_f3dex2.c"
-    "../lib/libgfxd/uc_f3dexb.c"
 )
 source_group("Source Files\\Libraries\\libgfxd" FILES ${Source_Files__Libraries__libgfxd})
 
@@ -431,7 +429,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU|Clang|AppleClang")
         $<$<COMPILE_LANGUAGE:CXX>:-Wno-deprecated-enum-enum-conversion>
 		-pthread
 	)
-	
+
     if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
         target_link_options(${PROJECT_NAME} PUBLIC
             -pthread
@@ -445,9 +443,12 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU|Clang|AppleClang")
 
 endif()
 
+target_compile_definitions(${PROJECT_NAME} PUBLIC -DF3DEX_GBI_2)
+
 ################################################################################
 # Dependencies
 ################################################################################
+
 add_dependencies(${PROJECT_NAME}
     OTRExporter
     libultraship
